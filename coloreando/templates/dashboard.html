@@ -3,7 +3,7 @@
 
 {% block media %}
 	<script>
-		var color = '#f5f2a9'; // set user's color here.
+		var color = '{{ color_id }}'; // set user's color here.
 	</script>
 	<script src="{% static 'js/lib/easeljs-0.6.1.min.js' %}"></script>
 	<script src="{% static 'js/app.js' %}"></script>
@@ -18,15 +18,23 @@
 					<th>Name</th>
 					<th>Color</th>
 				</tr>
+				{% for buddy in dashboard.buddies %}
+				{{buddy}}
 				<tr>
-					<td><p>Juan Perez</p></td>
-					<td><div></div></td>
+					<td><p>{{ buddy.username }}</p></td>
+					<td><div style="background-color: {{ buddy.color_id }}"></div></td>
 				</tr>
+				{% endfor %}
 			</table>
+			
 		</div>
 		<div class="span8 pull-left" id="canvas-container">
 			<h2>Draw Below!</h2>
 			<canvas id="dashboard-canvas" width="600" height="350"></canvas>
+		</div>
+		<div>
+			<h2>Compartí este Dashboard!</h2>
+			<div class="">{{ request.build_absolute_uri }}</div>
 		</div>
 	</div>
 {% endblock content %}
