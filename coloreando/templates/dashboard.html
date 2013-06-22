@@ -1,19 +1,32 @@
 {% extends "landing.html" %}
+{% load staticfiles %}
 
 {% block media %}
+	<script>
+		var color = '#f5f2a9'; // set user's color here.
+	</script>
 	<script src="{% static 'js/lib/easeljs-0.6.1.min.js' %}"></script>
 	<script src="{% static 'js/app.js' %}"></script>
 {% endblock media %}
 
 {% block content %}
 	<div class="container">
-		<div class="span2">
+		<div class="span3 pull-left">
 			<h2>Buddies</h2>
-			<ul is="buddy-list">
-			</ul>
+			<table class="table table-bordered" id="buddy-list">
+				<tr>
+					<th>Name</th>
+					<th>Color</th>
+				</tr>
+				<tr>
+					<td><p>Juan Perez</p></td>
+					<td><div></div></td>
+				</tr>
+			</table>
 		</div>
-		<div class="span10">
-			<canvas id="dashboard-canvas"></canvas>
+		<div class="span8 pull-left" id="canvas-container">
+			<h2>Draw Below!</h2>
+			<canvas id="dashboard-canvas" width="600" height="350"></canvas>
 		</div>
 	</div>
 {% endblock content %}

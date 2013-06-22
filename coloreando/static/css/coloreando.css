@@ -1,0 +1,13 @@
+div.navbar {
+  margin-top: 15px;
+}
+
+table#buddy-list td > div {
+  height: 15px;
+  width: 15px;
+  border: 1px solid black;
+}
+
+#dashboard-canvas {
+  border: 1px solid black;
+}
