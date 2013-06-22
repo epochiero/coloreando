@@ -41,7 +41,7 @@ class DashboardView(TemplateView):
     	context = super(DashboardView, self).get_context_data(*args, **kwargs)
     	dashboard_id = context['dashboard_id']
     	if dashboard_id:
-    		dashboard = get_dashboard(dashboard_id).to_json()
+    		dashboard = get_dashboard(dashboard_id)
     		context.update(
     			{'dashboard': dashboard,
     			 'color_id': self.request.session.get("color_id"),
