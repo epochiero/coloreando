@@ -29,7 +29,7 @@
         <form id="login-form" class="login" method="POST" action="{% url 'login_view' %}">
             {% csrf_token %}
             <div class="">Poné tu nombre: <input type="text" name="username" />
-            <div class="">Elegí tu color: <input id="color-selector"></div>
+            <div class="">Elegí tu color: <input type="text" name="color-id" id="color-selector"></div>
             <div class="sign-in-button"><input type="submit" name="submit" value="Entrar"></div>
         </form>
     </div>

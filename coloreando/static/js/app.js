@@ -5,8 +5,3 @@ $(document).ready(function() {
 	});
 });
 
-$("#login-form").submit(function(){
-	color = $('#color-selector').minicolors('value');
-	form.color = color;
-	form.submit();
-});
