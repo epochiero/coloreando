@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from views import LandingView, LoginView
+from views import LandingView, LoginView, DashboardView
 
 urlpatterns = patterns('',
     url('^$', LandingView.as_view(), name='landing_view'),
