@@ -18,7 +18,7 @@ class LoginView(TemplateView):
     		(request.POST['username'], str(random.randint(1,1000000))))
     	#Save client
     	#Notify all clients of new user
-        return redirect('{}#{}'.format(reverse('dashboard_view'), new_canvas_name))
+        return redirect(reverse('dashboard_view'), args=(new_canvas_name,))
 
 
 class DashboardView(TemplateView):
