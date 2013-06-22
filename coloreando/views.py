@@ -16,3 +16,7 @@ class LoginView(TemplateView):
     	#
         return super(LandingView, self).post(request)
 
+
+class DashboardView(TemplateView):
+    template_name = "dashboard.html"
+

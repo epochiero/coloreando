@@ -1,19 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Coloreando</title>
-</head>
-<body>
-	<div class="navbar"></div>
+{% extends "landing.html" %}
+
+{% block media %}
+	<script src="{% static 'js/lib/easeljs-0.6.1.min.js' %}"></script>
+	<script src="{% static 'js/app.js' %}"></script>
+{% endblock media %}
+
+{% block content %}
 	<div class="container">
 		<div class="span2">
-			Buddies
-			<ul>
-				
+			<h2>Buddies</h2>
+			<ul is="buddy-list">
 			</ul>
 		</div>
-		<div class="span10"></div>
+		<div class="span10">
+			<canvas id="dashboard-canvas"></canvas>
+		</div>
 	</div>
-</body>
-</html>
+{% endblock content %}
