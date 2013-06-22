@@ -9,17 +9,18 @@ $(function() {
 
   size = 3;
 
-  stage.addEventListener('stagemousemove', function(e) {
-    if (oldX) {
-      shape.graphics.beginStroke(color)
-                    .setStrokeStyle(size, "round")
-                    .moveTo(oldX, oldY)
-                    .lineTo(e.stageX, e.stageY);
-      stage.update();
-    }
-    oldX = e.stageX;
-    oldY = e.stageY;
+  stage.addEventListener('stagemousedown', function(e) {
+    stage.addEventListener('stagemousemove', function(e) {
+      if (oldX) {
+        shape.graphics.beginStroke(color)
+                      .setStrokeStyle(size, "round")
+                      .moveTo(oldX, oldY)
+                      .lineTo(e.stageX, e.stageY);
+        stage.update();
+      }
+      oldX = e.stageX;
+      oldY = e.stageY;
+    });
   });
-
   stage.update();
 });
