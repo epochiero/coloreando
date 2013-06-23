@@ -4,28 +4,34 @@
 {% block media %}
 	<script>
 		var color = '{{ color_id }}'; // set user's color here.
-		var dashboard_id = '{{ dashboard.dashboard_id }}';
+		window.dashboard_id = '{{ dashboard.dashboard_id }}';
 	</script>
 	<script src="{% static 'js/lib/easeljs-0.6.1.min.js' %}"></script>
 	<script src="{% static 'js/app.js' %}"></script>
 {% endblock media %}
 
 {% block content %}
-	<div class="container">
+	<div  ng-controller='BuddiesController' class="container">
 		<div class="span3 pull-left">
 			<h2>Buddies</h2>
+
+      {% verbatim %}
 			<table class="table table-bordered" id="buddy-list">
 				<tr>
 					<th>Name</th>
 					<th>Color</th>
 				</tr>
-				{% for buddy in dashboard.buddies %}
-				<tr>
+
+				<tr ng-repeat='buddy in buddies'>
 					<td><p>{{ buddy.username }}</p></td>
 					<td><div style="background-color: {{ buddy.color_id }}"></div></td>
 				</tr>
-				{% endfor %}
+
+        <button ng-click='add_buddy("test", "blue")'>Agregar un usuario de prueba</button>
+
 			</table>
+
+      {% endverbatim %}
 			
 		</div>
 		<div class="span8 pull-left" id="canvas-container">
