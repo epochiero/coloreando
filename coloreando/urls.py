@@ -8,5 +8,4 @@ urlpatterns = patterns('',
     url('^dashboard/(?P<dashboard_id>[a-zA-Z0-9\-]+)$', DashboardView.as_view(), name='dashboard_view'),
     url('^api/saveEvent$', SaveEventView.as_view(), name='save_event_view'),
     url('^api/getEvents$', GetEventsView.as_view(), name='get_events_view'),
-    url('^api/getBuddies$', GetBuddiesView.as_view(), name='get_buddies_view'),
 )

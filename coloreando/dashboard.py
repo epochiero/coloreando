@@ -27,9 +27,6 @@ class Dashboard(object):
     def add_buddy(self, buddy):
         self.buddies.append(buddy)
 
-    def remove_buddy(self, buddy):
-        self.buddies.remove(buddy)
-
     def save(self):
         redis = redis_connection()
         redis.set(self.dashboard_id, self.to_json())
