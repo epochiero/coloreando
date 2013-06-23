@@ -14,18 +14,24 @@
 	<div class="container">
 		<div class="span3 pull-left">
 			<h2>Buddies</h2>
-			<table class="table table-bordered" id="buddy-list">
+
+      {% verbatim %}
+			<table ng-controller='BuddiesController' class="table table-bordered" id="buddy-list">
 				<tr>
 					<th>Name</th>
 					<th>Color</th>
 				</tr>
-				{% for buddy in dashboard.buddies %}
-				<tr>
+
+				<tr ng-repeat='buddy in buddies'>
 					<td><p>{{ buddy.username }}</p></td>
 					<td><div style="background-color: {{ buddy.color_id }}"></div></td>
 				</tr>
-				{% endfor %}
+
 			</table>
+
+
+
+      {% endverbatim %}
 			
 		</div>
 		<div class="span8 pull-left" id="canvas-container">

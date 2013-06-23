@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='coloreando'>
 <head>
     <meta charset="utf-8">
     <title>Coloreando</title>
@@ -15,6 +15,8 @@
     <script src="{% static 'js/lib/jquery.cookie.js' %}"></script>
     <script src="{% static 'minicolors/jquery.minicolors.js' %}">
     <script src="{% static 'js/lib/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/lib/angular.min.js' %}"></script>
+    <script src="{% static 'js/coloreando.js' %}"></script>
 
     {% block media %}
         <script src="{% static 'js/landing.js' %}"></script>
