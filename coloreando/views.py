@@ -1,11 +1,13 @@
+import json
+import random
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 
 from dashboard import Dashboard, Buddy, get_dashboard, save_event, get_events
-import json
-import random
+from utils import JSONResponseMixin
 
 
 class LandingView(TemplateView):
@@ -82,3 +84,12 @@ class GetEventsView(View):
         dashboard_id = request.POST.get('dashboard_id')
         events = get_events(dashboard_id)
         return HttpResponse(json.dumps({'events': events}), mimetype='application/json')
+
+
+class GetBuddiesView(View):
+
+    def get(self, request):
+        dashboard_id = request.GET.get('dashboard_id')
+        dashboard = get_dashboard(dashboard_id)
+        buddies = [{'username': b.username, 'color_id': b.color_id} for b in dashboard.buddies]
+        return HttpResponse(json.dumps({'buddies': buddies}), mimetype='application/json')
