@@ -32,35 +32,36 @@ $(function() {
 });
 
 function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
-    endpoint = "/api/saveEvent";
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      headers: {'X-CSRFToken': $.cookie('csrftoken')},
-      data: {'color': color, 'oldX': oldX, 'oldY': oldY, 'newX': newX, 'newY': newY, 'dashboard_id': dashboard_id},
-      success: function() {}
-    });
+  endpoint = "/api/saveEvent";
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    headers: {'X-CSRFToken': $.cookie('csrftoken')},
+    data: {'color': color, 'oldX': oldX, 'oldY': oldY, 'newX': newX, 'newY': newY, 'dashboard_id': dashboard_id},
+    success: function() {}
+  });
 }
 
 function replayEvents(dashboard_id) {
-    endpoint = "/api/getEvents";
-    $.ajax({
-      url: endpoint,
-      method: "POST",
-      headers: {'X-CSRFToken': $.cookie('csrftoken')},
-      data: {'dashboard_id': dashboard_id},
-      success: function(data) {
-        $.each(data.events, function(index, event) {
-          event = JSON.parse(event);
-          if (oldX) {
-            shape.graphics.beginStroke(event.color)
-                          .setStrokeStyle(size, "round")
-                          .moveTo(event.oldX, event.oldY)
-                          .lineTo(event.newX, event.newY);
-            stage.update();
-          }
-          oldX = event.newX;
-          oldY = event.newY;
-        });
-      }
-    });
+  endpoint = "/api/getEvents";
+  $.ajax({
+    url: endpoint,
+    method: "POST",
+    headers: {'X-CSRFToken': $.cookie('csrftoken')},
+    data: {'dashboard_id': dashboard_id},
+    success: function(data) {
+      $.each(data.events, function(index, event) {
+        event = JSON.parse(event);
+        if (oldX) {
+          shape.graphics.beginStroke(event.color)
+                        .setStrokeStyle(size, "round")
+                        .moveTo(event.oldX, event.oldY)
+                        .lineTo(event.newX, event.newY);
+          stage.update();
+        }
+        oldX = event.newX;
+        oldY = event.newY;
+      });
+    }
+  });
+}
