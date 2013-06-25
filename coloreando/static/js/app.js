@@ -18,11 +18,13 @@ $(function() {
                       .lineTo(e.stageX, e.stageY);
         stage.update();
       }
+      
+      /* Save event */
+      saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
+      
       oldX = e.stageX;
       oldY = e.stageY;
 
-      /* Save event */
-      saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
     });
     stage.addEventListener('stagemouseup', function(e) {});
   });
