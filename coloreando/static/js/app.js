@@ -18,15 +18,17 @@ $(function() {
                       .lineTo(e.stageX, e.stageY);
         stage.update();
       }
-      oldX = e.stageX;
-      oldY = e.stageY;
-
       /* Save event */
       saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
+
+      oldX = e.stageX;
+      oldY = e.stageY;
     });
-    stage.addEventListener('stagemouseup', function(e) {});
   });
+  // need to get mouseup event working correctly...
   stage.update();
+
+  replayEvents(dashboard_id);
 });
 
 function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
@@ -48,7 +50,6 @@ function replayEvents(dashboard_id) {
       headers: {'X-CSRFToken': $.cookie('csrftoken')},
       data: {'dashboard_id': dashboard_id},
       success: function(data) {
-        console.log(data);
         $.each(data.events, function(index, event) {
           event = JSON.parse(event);
           if (oldX) {
@@ -64,7 +65,3 @@ function replayEvents(dashboard_id) {
       }
     });
 }
-
-$(document).ready(function() {
-  replayEvents(dashboard_id);
-});

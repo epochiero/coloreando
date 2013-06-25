@@ -1,3 +1,4 @@
+import logging
 import json
 import random
 
@@ -7,7 +8,8 @@ from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 
 from dashboard import Dashboard, Buddy, get_dashboard, save_event, get_events
-from utils import JSONResponseMixin
+
+logger = logging.getLogger(__name__)
 
 
 class LandingView(TemplateView):
@@ -39,7 +41,7 @@ class LoginView(TemplateView):
 
         request.session["color_id"] = color_id
         #Notify all clients of new user
-        return redirect(reverse('dashboard_view', args=(dashboard_id,)))
+        return redirect(dashboard.get_absolute_url())
 
 
 class DashboardView(TemplateView):
@@ -93,3 +95,6 @@ class GetBuddiesView(View):
         dashboard = get_dashboard(dashboard_id)
         buddies = [{'username': b.username, 'color_id': b.color_id} for b in dashboard.buddies]
         return HttpResponse(json.dumps({'buddies': buddies}), mimetype='application/json')
+
+
+

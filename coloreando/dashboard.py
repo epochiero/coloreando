@@ -1,5 +1,8 @@
 import json
 import random
+
+from django.core.urlresolvers import reverse
+
 from utils import redis_connection
 
 
@@ -35,6 +38,9 @@ class Dashboard(object):
         doc = {"dashboard_id": self.dashboard_id}
         doc["buddies"] = [buddy.to_json() for buddy in self.buddies]
         return json.dumps(doc)
+
+    def get_absolute_url(self):
+        return reverse('dashboard_view', args=(self.dashboard_id,))
 
 
 def get_dashboard(dashboard_id):

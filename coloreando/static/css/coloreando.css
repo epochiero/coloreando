@@ -8,6 +8,11 @@ table#buddy-list td > div {
   border: 1px solid black;
 }
 
+div.share {
+  margin-top: 18px;
+  margin-right: 18px;
+}
+
 #dashboard-canvas {
   border: 1px solid black;
 }

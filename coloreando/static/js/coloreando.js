@@ -10,9 +10,4 @@ coloreando.controller('BuddiesController', function($scope, $http) {
     $scope.$apply();
   });
 
-  // Solicita los usuarios iniciales a la aplicacion.
-  $scope.add_buddy = function(user, color) {
-    $scope.buddies.push({username: user, color_id: color});
-  }
-
 });
