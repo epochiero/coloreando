@@ -30,3 +30,5 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+from django.contrib.staticfiles.handlers import StaticFilesHandler
+application = StaticFilesHandler(application)

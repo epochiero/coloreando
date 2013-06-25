@@ -64,4 +64,3 @@ function replayEvents(dashboard_id) {
         });
       }
     });
-}
