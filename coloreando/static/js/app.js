@@ -32,6 +32,9 @@ $(function() {
 });
 
 function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
+  var socket = io.connect('/coloreando');
+  socket.on('draw', 'hola');
+  socket.on('gotit', function(message){console.log(message);});
   endpoint = "/api/saveEvent";
   $.ajax({
     url: endpoint,
