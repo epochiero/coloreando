@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from views import LandingView, LoginView, DashboardView, SaveEventView, GetEventsView, GetBuddiesView
 import socketio.sdjango
+from api.events import socketio_handle
 
 
 urlpatterns = patterns('',
@@ -10,5 +11,5 @@ urlpatterns = patterns('',
     url('^api/saveEvent$', SaveEventView.as_view(), name='save_event_view'),
     url('^api/getEvents$', GetEventsView.as_view(), name='get_events_view'),
     url('^api/getBuddies$', GetBuddiesView.as_view(), name='get_buddies_view'),
-    url("^socket\.io", include(socketio.sdjango.urls)),
+    url("^socket\.io", socketio_handle),
 )

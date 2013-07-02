@@ -1,9 +1,14 @@
+from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
-from socketio.mixins import RoomsMixin, BroadcastMixin
-from socketio.sdjango import namespace
+from django.http import HttpResponse
 
-@namespace('/chat')
+def socketio_handle(request):
+    socketio_manage(request.environ, {'/event': EventNamespace},
+                    request)
+    return HttpResponse()
+
 class EventNamespace(BaseNamespace):
+
     def on_draw(self, msg):
-    	print msg
+        print msg
         self.emit('gotit', 'ok!')
