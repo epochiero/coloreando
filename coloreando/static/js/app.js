@@ -1,4 +1,11 @@
 var stage, shape, oldX, oldY, size;
+var socket = io.connect('/coloreando');
+socket.on('draw_response', function(_event) {
+  draw_event = JSON.parse(_event).event;
+  draw(draw_event.color, draw_event.oldX, draw_event.oldY, draw_event.newX, draw_event.newY);
+});
+
+socket.on('get_buddies_response', function(message){console.log(message);});
 
 $(function() {
   stage = new createjs.Stage("dashboard-canvas");
@@ -12,11 +19,7 @@ $(function() {
   stage.addEventListener('stagemousedown', function(e) {
     stage.addEventListener('stagemousemove', function(e) {
       if (oldX) {
-        shape.graphics.beginStroke(color)
-                      .setStrokeStyle(size, "round")
-                      .moveTo(oldX, oldY)
-                      .lineTo(e.stageX, e.stageY);
-        stage.update();
+        draw(color, oldX, oldY, e.stageX, e.stageY);
       }
       /* Save event */
       saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
@@ -32,39 +35,29 @@ $(function() {
 });
 
 function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
-  var socket = io.connect('/coloreando');
-  socket.on('draw', 'hola');
-  socket.on('gotit', function(message){console.log(message);});
-  endpoint = "/api/saveEvent";
-  $.ajax({
-    url: endpoint,
-    method: "POST",
-    headers: {'X-CSRFToken': $.cookie('csrftoken')},
-    data: {'color': color, 'oldX': oldX, 'oldY': oldY, 'newX': newX, 'newY': newY, 'dashboard_id': dashboard_id},
-    success: function() {}
-  });
+  socket.emit('draw', {'color': color, 'oldX': oldX, 'oldY': oldY,
+              'newX': newX, 'newY': newY, 'dashboard_id': dashboard_id});
+}
+
+function draw(color, oldX, oldY, newX, newY) {
+   shape.graphics.beginStroke(color)
+                      .setStrokeStyle(size, "round")
+                      .moveTo(oldX, oldY)
+                      .lineTo(newX, newY);
+   stage.update();
 }
 
 function replayEvents(dashboard_id) {
-  endpoint = "/api/getEvents";
-  $.ajax({
-    url: endpoint,
-    method: "POST",
-    headers: {'X-CSRFToken': $.cookie('csrftoken')},
-    data: {'dashboard_id': dashboard_id},
-    success: function(data) {
-      $.each(data.events, function(index, event) {
+  socket.on('get_events_response', function(data){
+    $.each(data.events, function(index, event) {
         event = JSON.parse(event);
         if (oldX) {
-          shape.graphics.beginStroke(event.color)
-                        .setStrokeStyle(size, "round")
-                        .moveTo(event.oldX, event.oldY)
-                        .lineTo(event.newX, event.newY);
-          stage.update();
+          draw(color, oldX, oldY, event.newX, event.newY);
         }
         oldX = event.newX;
         oldY = event.newY;
       });
-    }
   });
+
+  socket.emit('get_events', {'dashboard_id': dashboard_id});
 }

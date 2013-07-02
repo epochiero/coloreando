@@ -1,5 +1,4 @@
 import logging
-import json
 import random
 
 from django.core.urlresolvers import reverse
@@ -7,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views.generic import View, TemplateView
 
-from dashboard import Dashboard, Buddy, get_dashboard, save_event, get_events
+from dashboard import Dashboard, Buddy, get_dashboard
 
 logger = logging.getLogger(__name__)
 
@@ -65,36 +64,4 @@ class DashboardView(TemplateView):
             #Redirect to login
             return redirect(reverse('landing_view') + '?dashboard_id=' + kwargs['dashboard_id'])
         return super(DashboardView, self).get(request, *args, **kwargs)
-
-
-class SaveEventView(View):
-
-    def post(self, request):
-        color = request.POST.get('color')
-        oldX = request.POST.get('oldX')
-        oldY = request.POST.get('oldY')
-        newX = request.POST.get('newX')
-        newY = request.POST.get('newY')
-        dashboard_id = request.POST.get('dashboard_id')
-        save_event(color, oldX, oldY, newX, newY, dashboard_id)
-        return HttpResponse(json.dumps({'success': 'true'}), mimetype='application/json')
-
-
-class GetEventsView(View):
-
-    def post(self, request):
-        dashboard_id = request.POST.get('dashboard_id')
-        events = get_events(dashboard_id)
-        return HttpResponse(json.dumps({'events': events}), mimetype='application/json')
-
-
-class GetBuddiesView(View):
-
-    def get(self, request):
-        dashboard_id = request.GET.get('dashboard_id')
-        dashboard = get_dashboard(dashboard_id)
-        buddies = [{'username': b.username, 'color_id': b.color_id} for b in dashboard.buddies]
-        return HttpResponse(json.dumps({'buddies': buddies}), mimetype='application/json')
-
-
 
