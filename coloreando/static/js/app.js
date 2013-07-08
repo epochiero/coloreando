@@ -17,22 +17,28 @@ $(function() {
   size = 3;
 
   stage.addEventListener('stagemousedown', function(e) {
-    stage.addEventListener('stagemousemove', function(e) {
-      if (oldX) {
-        draw(color, oldX, oldY, e.stageX, e.stageY);
-      }
-      /* Save event */
-      saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
-
-      oldX = e.stageX;
-      oldY = e.stageY;
-    });
+    oldX = e.stageX;
+    oldY = e.stageY;
+    stage.addEventListener('stagemousemove', handleMouseMove);
   });
-  // need to get mouseup event working correctly...
   stage.update();
-
   replayEvents(dashboard_id);
+
+  stage.addEventListener('stagemouseup', function(e) {
+    stage.removeEventListener('stagemousemove', handleMouseMove);
+  });
 });
+
+function handleMouseMove(e) {
+  if (oldX) {
+    draw(color, oldX, oldY, e.stageX, e.stageY);
+  }
+  /* Save event */
+  saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
+
+  oldX = e.stageX;
+  oldY = e.stageY;
+}
 
 function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
   socket.emit('draw', {'color': color, 'oldX': oldX, 'oldY': oldY,
