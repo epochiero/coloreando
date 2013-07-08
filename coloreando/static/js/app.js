@@ -5,7 +5,18 @@ socket.on('draw_response', function(_event) {
   draw(draw_event.color, draw_event.oldX, draw_event.oldY, draw_event.newX, draw_event.newY);
 });
 
-socket.on('get_buddies_response', function(message){console.log(message);});
+var coloreando = angular.module('coloreando', []);
+coloreando.controller('BuddiesController', function($scope, $http) {
+
+  $scope.buddies = [];
+
+  socket.on('get_buddies_response', function(data) {
+    d = JSON.parse(data);
+    $scope.buddies = d.buddies;
+    $scope.$apply();
+  });
+
+});
 
 $(function() {
   stage = new createjs.Stage("dashboard-canvas");
@@ -55,8 +66,8 @@ function draw(color, oldX, oldY, newX, newY) {
 
 function replayEvents(dashboard_id) {
   socket.on('get_events_response', function(data){
-    $.each(data.events, function(index, event) {
-        event = JSON.parse(event);
+    d = JSON.parse(data);
+    $.each(d.events, function(index, event) {
         if (oldX) {
           draw(color, oldX, oldY, event.newX, event.newY);
         }
