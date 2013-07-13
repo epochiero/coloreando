@@ -5,3 +5,12 @@
 *.pyc
 
 .DS_Store
+
+.project
+.pydevproject
+dump.rdb
+src/
+coloreando/settings/coloreando.db
+pysqlite2-doc/
+.settings/
+*.egg-info
