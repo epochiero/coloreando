@@ -39,7 +39,6 @@ class LoginView(TemplateView):
         dashboard.save()
 
         request.session["color_id"] = color_id
-        # Notify all clients of new user
         return redirect(dashboard.get_absolute_url())
 
 

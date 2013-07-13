@@ -29,8 +29,7 @@ class Dashboard(object):
     """
     def __init__(self, username=None):
         if username:
-            slug = username.replace(" ", "-")
-            self.dashboard_id = '-'.join((slug, str(random.randint(1, 1000000))))
+            self.dashboard_id = '-'.join((username, str(random.randint(1, 1000000))))
         self.short_url = None
         self.buddies = []
 
@@ -61,7 +60,8 @@ class Dashboard(object):
 
 def get_dashboard(dashboard_id):
     redis = redis_connection()
-    dashboard = Dashboard(dashboard_id)
+    dashboard = Dashboard()
+    dashboard.dashboard_id = dashboard_id
     dashboard_json = json.loads(redis.get(dashboard_id))
     for buddy in dashboard_json['buddies']:
         dashboard.add_buddy(Buddy(buddy["username"], buddy["color_id"]))
