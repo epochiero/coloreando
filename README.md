@@ -21,6 +21,7 @@ Instalación
 -----------
 
 * Puedes instalar la última versión de github haciendo:
+
 ``` 
 git clone https://github.com/epochiero/coloreando.git
 cd coloreando
