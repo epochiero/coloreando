@@ -39,7 +39,7 @@ class LoginView(TemplateView):
         dashboard.save()
 
         request.session["color_id"] = color_id
-        #Notify all clients of new user
+        # Notify all clients of new user
         return redirect(dashboard.get_absolute_url())
 
 
@@ -53,15 +53,16 @@ class DashboardView(TemplateView):
             dashboard = get_dashboard(dashboard_id)
             context.update(
                 {'dashboard': dashboard,
-                 'color_id': self.request.session.get("color_id"),
-                 }
+                'short_url': dashboard.short_url,
+                'color_id': self.request.session.get("color_id")
+                }
             )
 
         return context
 
     def get(self, request, *args, **kwargs):
         if not request.session.get("color_id", None):
-            #Redirect to login
+            # Redirect to login
             return redirect(reverse('landing_view') + '?dashboard_id=' + kwargs['dashboard_id'])
         return super(DashboardView, self).get(request, *args, **kwargs)
 
