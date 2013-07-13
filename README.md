@@ -36,7 +36,7 @@ virtualenv env
 python setup.py develop
 ```
 
-* Después necesitas iniciar ls BD:
+* Después necesitas iniciar la BD:
 
 ``` 
 python ./manage.py syncdb --settings=coloreando.settings.prod
