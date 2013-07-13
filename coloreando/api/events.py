@@ -37,7 +37,7 @@ class EventNamespace(BaseNamespace, BroadcastMixin, RoomsMixin):
         dashboard_id = event.get('dashboard_id')
         events = get_events(dashboard_id)
         self.broadcast_event(
-            'get_events_response', simplejson.dumps({'events': events}))
+            'get_events_response', {'events': events})
 
     def on_get_buddies(self, event):
         dashboard_id = event.get('dashboard_id')

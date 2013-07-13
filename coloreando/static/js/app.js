@@ -1,6 +1,6 @@
 var stage, shape, oldX, oldY, size;
 var socket = io.connect('/coloreando');
-socket.emit ('join_dashboard', {'dashboard_id': window.dashboard_id});
+socket.emit('join_dashboard', {'dashboard_id': window.dashboard_id});
 
 socket.on('draw_response', function(_event) {
   draw_event = JSON.parse(_event).event;
@@ -68,8 +68,8 @@ function draw(color, oldX, oldY, newX, newY) {
 
 function replayEvents(dashboard_id) {
   socket.on('get_events_response', function(data){
-    d = JSON.parse(data);
-    $.each(d.events, function(index, event) {
+    $.each(data.events, function(index, event) {
+        event = JSON.parse(event);
         if (oldX) {
           draw(color, oldX, oldY, event.newX, event.newY);
         }
