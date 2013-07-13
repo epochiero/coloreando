@@ -5,7 +5,10 @@ import requests
 from django.core.urlresolvers import reverse
 
 from utils import redis_connection
-import settings
+from coloreando.settings import prod as settings
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 class Buddy(object):
@@ -26,7 +29,8 @@ class Dashboard(object):
     """
     def __init__(self, username=None):
         if username:
-            self.dashboard_id = '-'.join((username, str(random.randint(1, 1000000))))
+            slug = username.replace(" ", "-")
+            self.dashboard_id = '-'.join((slug, str(random.randint(1, 1000000))))
         self.short_url = None
         self.buddies = []
 
@@ -38,6 +42,7 @@ class Dashboard(object):
         redis.set(self.dashboard_id, self.to_json())
 
     def to_json(self):
+        self.short_url = self.get_short_url()
         doc = {"dashboard_id": self.dashboard_id}
         doc["buddies"] = [buddy.to_json() for buddy in self.buddies]
         doc["short_url"] = self.short_url
@@ -48,7 +53,6 @@ class Dashboard(object):
             long_url = "{}{}".format(settings.BASE_URL, self.get_absolute_url())
             r = requests.post("https://api-ssl.bitly.com/v3/shorten", {"longUrl": long_url, "access_token": settings.BITLY_ACCESS_TOKEN})
             self.short_url = r.json()['data']['url']
-            self.save()
         return self.short_url
 
     def get_absolute_url(self):
@@ -57,14 +61,11 @@ class Dashboard(object):
 
 def get_dashboard(dashboard_id):
     redis = redis_connection()
-    dashboard_value = redis.get(dashboard_id)
-    if not dashboard_value:
-        return
+    dashboard = Dashboard(dashboard_id)
     dashboard_json = json.loads(redis.get(dashboard_id))
-    dashboard = Dashboard()
-    dashboard.dashboard_id = dashboard_json["dashboard_id"]
     for buddy in dashboard_json['buddies']:
         dashboard.add_buddy(Buddy(buddy["username"], buddy["color_id"]))
+    dashboard.short_url = dashboard_json["short_url"]
     return dashboard
 
 
