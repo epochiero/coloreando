@@ -38,18 +38,22 @@ setup(name='coloreando',
       namespace_packages=[],
       include_package_data=True,
       zip_safe=False,
+      dependency_links = [
+          'git+https://github.com/abourget/gevent-socketio.git@aeece7038b0052ddf6b4228857e4d7a67a6242f2#egg=gevent-socketio'
+        ],
       install_requires=[
-            'Django==1.5.1',
-            'Fabric==1.6.1',
-            'gevent==0.13.8',
-            'gevent-websocket==0.3.6',
-            'greenlet==0.4.1',
-            'gunicorn==17.5',
-            'redis==2.7.6',
-            'simplejson==3.3.0',
-            'wsgiref==0.1.2',
-            'pysqlite',
-            'honcho==0.4.2'
+          'Django==1.5.1',
+          'Fabric==1.6.1',
+          'gevent==0.13.8',
+          'gevent-websocket==0.3.6',
+          'gevent-socketio',
+          'greenlet==0.4.1',
+          'gunicorn==17.5',
+          'redis==2.7.6',
+          'simplejson==3.3.0',
+          'wsgiref==0.1.2',
+          'pysqlite',
+          'honcho==0.4.2'
         ],
       extras_require={
         'test': [
