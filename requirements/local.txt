@@ -1,4 +1,0 @@
--r common.txt
-honcho==0.4.2
-django-debug-toolbar
-pip-tools
