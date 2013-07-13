@@ -39,7 +39,7 @@ setup(name='coloreando',
       include_package_data=True,
       zip_safe=False,
       dependency_links = [
-          'git+https://github.com/abourget/gevent-socketio.git@aeece7038b0052ddf6b4228857e4d7a67a6242f2#egg=gevent-socketio'
+          'https://github.com/abourget/gevent-socketio/archive/aeece7038b0052ddf6b4228857e4d7a67a6242f2.zip#egg=gevent-socketio'
         ],
       install_requires=[
           'Django==1.5.1',
