@@ -1,6 +1,6 @@
 import simplejson
 from socketio import socketio_manage
-from socketio.mixins import BroadcastMixin
+from socketio.mixins import BroadcastMixin, RoomsMixin
 from socketio.namespace import BaseNamespace
 from django.http import HttpResponse
 from coloreando.dashboard import get_dashboard, save_event, get_events
@@ -12,7 +12,12 @@ def socketio_handle(request):
     return HttpResponse()
 
 
-class EventNamespace(BaseNamespace, BroadcastMixin):
+class EventNamespace(BaseNamespace, BroadcastMixin, RoomsMixin):
+
+    def on_join_dashboard(self, data):
+        self.dashboard_id = data.get('dashboard_id')
+        self.join(self.dashboard_id)
+        return True
 
     def on_draw(self, event):
         color = event.get('color')
@@ -22,9 +27,11 @@ class EventNamespace(BaseNamespace, BroadcastMixin):
         newY = event.get('newY')
         dashboard_id = event.get('dashboard_id')
         save_event(color, oldX, oldY, newX, newY, dashboard_id)
+
         # Send drawing event to all other clients
-        self.broadcast_event_not_me('draw_response',
-                                    simplejson.dumps({'success': 'true', 'event': event}))
+        self.emit_to_room(self.dashboard_id, 'draw_response',
+                          simplejson.dumps({'success': 'true', 'event': event}))
+        return True
 
     def on_get_events(self, event):
         dashboard_id = event.get('dashboard_id')
