@@ -10,4 +10,4 @@ honcho==0.4.2
 redis==2.7.6
 simplejson==3.3.0
 wsgiref==0.1.2
-
+requests==1.2.3
