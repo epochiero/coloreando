@@ -1,5 +1,7 @@
 var stage, shape, oldX, oldY, size;
 var socket = io.connect('/coloreando');
+socket.emit ('join_dashboard', {'dashboard_id': window.dashboard_id});
+
 socket.on('draw_response', function(_event) {
   draw_event = JSON.parse(_event).event;
   draw(draw_event.color, draw_event.oldX, draw_event.oldY, draw_event.newX, draw_event.newY);
