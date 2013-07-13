@@ -28,7 +28,7 @@ cd coloreando
 python setup.py develop
 ``` 
 
- * Si preferís hacerlo en un virtualenv ejecuta:
+Si preferís hacerlo en un virtualenv ejecuta:
 	
 	``` 
 	virtualenv env
