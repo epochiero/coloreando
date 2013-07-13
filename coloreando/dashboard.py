@@ -1,9 +1,11 @@
 import json
 import random
+import requests
 
 from django.core.urlresolvers import reverse
 
 from utils import redis_connection
+import settings
 
 
 class Buddy(object):
@@ -25,6 +27,7 @@ class Dashboard(object):
     def __init__(self, username=None):
         if username:
             self.dashboard_id = '-'.join((username, str(random.randint(1, 1000000))))
+        self.short_url = None
         self.buddies = []
 
     def add_buddy(self, buddy):
@@ -37,7 +40,16 @@ class Dashboard(object):
     def to_json(self):
         doc = {"dashboard_id": self.dashboard_id}
         doc["buddies"] = [buddy.to_json() for buddy in self.buddies]
+        doc["short_url"] = self.short_url
         return json.dumps(doc)
+
+    def get_short_url(self):
+        if not self.short_url:
+            long_url = "{}{}".format(settings.BASE_URL, self.get_absolute_url())
+            r = requests.post("https://api-ssl.bitly.com/v3/shorten", {"longUrl": long_url, "access_token": settings.BITLY_ACCESS_TOKEN})
+            self.short_url = r.json()['data']['url']
+            self.save()
+        return self.short_url
 
     def get_absolute_url(self):
         return reverse('dashboard_view', args=(self.dashboard_id,))

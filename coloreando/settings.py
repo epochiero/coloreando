@@ -161,3 +161,7 @@ LOGGING = {
         },
     }
 }
+
+BITLY_ACCESS_TOKEN = "9c4586e83ab886e4745c7139b4ce01a875b9c76c"
+
+BASE_URL = "http://0.0.0.0:8000"
