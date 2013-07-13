@@ -30,11 +30,11 @@ python setup.py develop
 
 Si preferís hacerlo en un virtualenv ejecutá:
 	
-	``` 
-	virtualenv env
-	. env/bin/activate
-	python setup.py develop
-	```
+``` 
+virtualenv env
+. env/bin/activate
+python setup.py develop
+```
 
 * Después necesitas iniciar ls BD:
 
