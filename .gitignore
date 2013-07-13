@@ -10,3 +10,5 @@
 .pydevproject
 dump.rdb
 src/
+coloreando/settings/coloreando.db
+pysqlite2-doc/
