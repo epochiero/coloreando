@@ -17,22 +17,26 @@ Por ejemplo en Fedora Linux sería:
 sudo yum install libevent-devel sqlite-devel redis
 ``` 
 
-Iniciar
--------
+Instalación
+-----------
 
-* Es conveniente que generes tu propio virtualenv para la instalación de dependencias:
-
+* Puedes instalar la última versión de github haciendo:
 ``` 
-mkvirtualenv coloreando
-``` 
-
-* Después puedes instalarlas corriendo:
-
-``` 
-pip install -r requirements.txt
+git clone https://github.com/epochiero/coloreando.git
+cd coloreando
+python setup.py develop
 ``` 
 
-* Iniciar ls BD:
+.. Warning::
+	Si preferís hacerlo en un virtualenv ejecuta:
+	
+	``` 
+	virtualenv env
+	. env/bin/activate
+	python setup.py develop
+	```
+
+* Después necesitas iniciar ls BD:
 
 ``` 
 python ./manage.py syncdb --settings=coloreando.settings.prod
