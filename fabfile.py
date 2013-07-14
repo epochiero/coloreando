@@ -32,3 +32,4 @@ def deploy():
         with prefix('source ../../.virtualenvs/coloreando/bin/activate'):
             run('pip install -r requirements/{}.txt'.format(env.use_settings))
             run('python manage.py syncdb --settings coloreando.settings.{}'.format(env.use_settings))
+            run('kill -HUP `cat /tmp/gunicorn.pid`')
