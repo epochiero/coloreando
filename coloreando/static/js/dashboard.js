@@ -15,6 +15,7 @@ $(function() {
   stage.addChild(shape);
 
   size = 3;
+  shapeType = "round";
 
   stage.addEventListener('stagemousedown', function(e) {
     oldX = e.stageX;
@@ -27,11 +28,25 @@ $(function() {
   stage.addEventListener('stagemouseup', function(e) {
     stage.removeEventListener('stagemousemove', handleMouseMove);
   });
+
+  $(".eraser").click(function() {
+    size = 20;
+    shapeType = "square";
+    original_color = color;
+    color = "#FFFFFF";
+  });
+
+  $(".pencil").click(function() {
+    size = 3;
+    shapeType = "round";
+    color = original_color;
+  });
+
 });
 
 function handleMouseMove(e) {
   if (oldX) {
-    draw(color, oldX, oldY, e.stageX, e.stageY);
+      draw(color, oldX, oldY, e.stageX, e.stageY);
   }
   /* Save event */
   saveEvent(color, oldX, oldY, e.stageX, e.stageY, dashboard_id);
@@ -47,7 +62,7 @@ function saveEvent(color, oldX, oldY, newX, newY, dashboard_id) {
 
 function draw(color, oldX, oldY, newX, newY) {
    shape.graphics.beginStroke(color)
-                      .setStrokeStyle(size, "round")
+                      .setStrokeStyle(size, shapeType)
                       .moveTo(oldX, oldY)
                       .lineTo(newX, newY);
    stage.update();
@@ -58,7 +73,7 @@ function replayEvents(dashboard_id) {
     $.each(data.events, function(index, event) {
         event = JSON.parse(event);
         if (oldX) {
-          draw(color, oldX, oldY, event.newX, event.newY);
+          draw(event.color, event.oldX, event.oldY, event.newX, event.newY);
         }
         oldX = event.newX;
         oldY = event.newY;

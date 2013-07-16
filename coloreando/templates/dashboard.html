@@ -7,6 +7,7 @@
 		window.dashboard_id = '{{ dashboard.dashboard_id }}';
 	</script>
 	<script src="{% static 'js/lib/easeljs-0.6.1.min.js' %}"></script>
+	
 	<script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock media %}
 
@@ -36,6 +37,10 @@
 			<h2 class="pull-left">Draw Below!</h2>
 			<div class="pull-right share"><h4>{{ short_url }}</h4></div>
 			<canvas id="dashboard-canvas" width="600" height="350"></canvas>
+			<div class="tools">
+				<div class="eraser"><img src="{% static 'img/eraser.png' %}"></img></div>
+				<div class="pencil"><img src="{% static 'img/pencil.png' %}"></img></div>
+			</div>
 		</div>
 	</div>
 {% endblock content %}
