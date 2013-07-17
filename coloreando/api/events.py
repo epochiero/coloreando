@@ -21,12 +21,14 @@ class EventNamespace(BaseNamespace, BroadcastMixin, RoomsMixin):
 
     def on_draw(self, event):
         color = event.get('color')
+        size = event.get('size')
+        shapeType = event.get('shapeType')
         oldX = event.get('oldX')
         oldY = event.get('oldY')
         newX = event.get('newX')
         newY = event.get('newY')
         dashboard_id = event.get('dashboard_id')
-        save_event(color, oldX, oldY, newX, newY, dashboard_id)
+        save_event(color, size, shapeType, oldX, oldY, newX, newY, dashboard_id)
 
         # Send drawing event to all other clients
         self.emit_to_room(self.dashboard_id, 'draw_response',

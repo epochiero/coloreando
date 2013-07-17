@@ -69,10 +69,10 @@ def get_dashboard(dashboard_id):
     return dashboard
 
 
-def save_event(color, oldX, oldY, newX, newY, dashboard_id):
+def save_event(color, size, shapeType, oldX, oldY, newX, newY, dashboard_id):
     redis = redis_connection()
     key_name = '{}-events'.format(dashboard_id)
-    redis.rpush(key_name, json.dumps({'color': color, 'oldX': oldX, 'oldY': oldY, 'newX': newX, 'newY': newY}))
+    redis.rpush(key_name, json.dumps({'color': color, 'size': size, 'shapeType': shapeType, 'oldX': oldX, 'oldY': oldY, 'newX': newX, 'newY': newY}))
 
 
 def get_events(dashboard_id):
