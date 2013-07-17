@@ -76,12 +76,13 @@ function replayEvents(dashboard_id) {
         event = JSON.parse(event);
         if (oldX) {
           draw(event.color, event.size, event.shapeType, event.oldX, event.oldY, event.newX, event.newY);
+          stage.update();
         }
         oldX = event.newX;
         oldY = event.newY;
       });
-    stage.update();
   });
+  
 
   socket.emit('get_events', {'dashboard_id': dashboard_id});
 }
