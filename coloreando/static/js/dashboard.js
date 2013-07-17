@@ -65,7 +65,7 @@ function saveEvent(color, size, shapeType, oldX, oldY, newX, newY, dashboard_id)
 
 function draw(color, size, shapeType, oldX, oldY, newX, newY) {
    shape.graphics.beginStroke(color)
-                      .setStrokeStyle(size || 3, shapeType||"round")
+                      .setStrokeStyle(size || 20, shapeType||"square")
                       .moveTo(oldX, oldY)
                       .lineTo(newX, newY);
 }
