@@ -46,4 +46,4 @@ honcho start
 
 Demo
 ----
-  http://tharsus.com.ar:8000
+  http://coloreando.tharsus.com.ar
