@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 	$('#color-selector').minicolors({
 		control: 'wheel',

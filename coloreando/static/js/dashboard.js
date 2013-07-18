@@ -44,6 +44,14 @@ $(function() {
     color = original_color;
   });
 
+  $("#color-selector-dashboard").minicolors({
+    control: 'wheel',
+    defaultValue: color,
+    change: function(hex, opacity) {
+        color = hex;
+    }
+  });
+
 });
 
 function handleMouseMove(e) {
