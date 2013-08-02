@@ -38,7 +38,7 @@ class EventNamespace(BaseNamespace, BroadcastMixin, RoomsMixin):
     def on_get_events(self, event):
         dashboard_id = event.get('dashboard_id')
         events = get_events(dashboard_id)
-        self.broadcast_event(
+        self.emit(
             'get_events_response', {'events': events})
 
     def on_get_buddies(self, event):
@@ -46,5 +46,5 @@ class EventNamespace(BaseNamespace, BroadcastMixin, RoomsMixin):
         dashboard = get_dashboard(dashboard_id)
         buddies = [{
             'username': b.username, 'color_id': b.color_id} for b in dashboard.buddies]
-        self.broadcast_event('get_buddies_response', simplejson.dumps(
+        self.emit('get_buddies_response', simplejson.dumps(
             {'buddies': buddies}))
